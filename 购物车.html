@@ -18,6 +18,7 @@
 			<div class="row header">
 				<h2>欢迎来到我的店铺</h2>
 				<div class="col-md-1 box1 col-md-offset-11">
+					<button type="button" class="btn btn-primary"  @click.stop="pause">暂停</button>
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">购物车</button>
 				</div>
 			</div>
@@ -105,7 +106,8 @@
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
-			<audio src="audio/陈雪凝%20-%20你的酒馆对我打了烊.mp3" controls="controls" autoplay="autoplay" class="audio"></audio>
+			
+			<audio  ref="audio" src="audio/陈雪凝%20-%20你的酒馆对我打了烊.mp3" controls="controls" autoplay="autoplay" class="audio"></audio>
 		</div>
 	</body>
 </html>
@@ -228,6 +230,12 @@
 						this.g_arr.splice(i, 1)
 					}
 				}
+			},
+			//音频暂停
+			pause(){
+				const audio=this.$refs.audio
+				// console.log(audio);
+				audio.pause()
 			}
 		},
 		//计算属性
@@ -241,22 +249,21 @@
 				}
 				return arr
 			},
-			//计算总价钱:总价钱=当前项的单价*当前项的个数11
+			//计算总价钱:总价钱=当前项的单价*当前项的个数
 			zongq() {
 				var num = 0;
 				for (let i = 0; i < this.g_arr.length; i++) {
 					num += this.g_arr[i].price * this.g_arr[i].g
 				}
 				return num
-			}
+			},
 		},
+		//点击播放音乐
 		mounted() {
-			let oIframe = document.createElement('iframe')
-			oIframe.scr = 'audio/陈雪凝%20-%20你的酒馆对我打了烊.mp3'
-			oIframe.style.display = 'none'
-			onload = () => {
-				oIframe.remove()
-			}
+			const audio=this.$refs.audio
+			document.addEventListener('click',()=>{
+				audio.play()
+			},false)
 		}
 	})
 </script>
